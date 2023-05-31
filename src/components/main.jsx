@@ -4,9 +4,8 @@ import search from "../getData";
 const Try =  () =>{
 
     const[data, setData] = useState([]);
+    const [searchTerm, setSearchTerm] = useState("");
 
-    
-    
     const fetchData = async () => {
         const newData = await search();
         setData(newData)
@@ -14,9 +13,17 @@ const Try =  () =>{
 
     fetchData()
 
-    const FilterCoin = data.filter((event) => event.name.toLowerCase().includes(search.toLowerCase()));
+    const FilterCoin = (event) => {
+        setSearchTerm(event.target.value);
+      };
 
-    const dataInfo = data.map((element) => {
+    const filteredData = data.filter((element) =>
+        element.symbol.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        element.name.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      
+
+    const dataInfo = filteredData.map((element) => {
         return(
             <div>
                 <div >
@@ -34,7 +41,7 @@ const Try =  () =>{
         <section className="main">
             <div className="target">
                 <div className="startPart">
-                    <h1>HELLO WORLD</h1>
+                    <h1>Sales Activity</h1>
                 </div>
                 <div className="endPart">
                     <div className="tittleSearch">
