@@ -16,10 +16,15 @@ const Try =  () =>{
         fetchData();
     }
 
+    const dataInfo = data.map((element) => {
+        return <p>{element.symbol}</p>; // Suponiendo que el objeto tiene una propiedad "nombre"
+      });
 
     return(
         <div>
-            <h1>{data.id}</h1>
+            <ul>
+                <li>{dataInfo}</li>
+            </ul>
         </div>
     )
 }
