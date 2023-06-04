@@ -1,13 +1,13 @@
 import { useState } from "react";
-import search from "../getData";
+import searchInfo from "../helper/getCriptoCoinData";
 
-const Try =  () =>{
+const SearchCoinsBar =  () =>{
 
     const[data, setData] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
 
     const fetchData = async () => {
-        const newData = await search();
+        const newData = await searchInfo();
         setData(newData)
     }
 
@@ -28,7 +28,7 @@ const Try =  () =>{
             <div>
                 <div >
                     <div className="criptoInfo">
-                        <p className="symbol">{element.symbol}</p>
+                        <img src={element.image} className="symbol"/>
                         <p>{element.name}</p>
                         <p>${element.current_price}</p>
                     </div>
@@ -62,5 +62,5 @@ const Try =  () =>{
     )
 }
 
-export default Try;
+export default SearchCoinsBar;
 

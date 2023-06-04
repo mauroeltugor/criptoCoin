@@ -109,4 +109,7 @@
 .symbol{
   border-radius: 30%;
   background-color: #eff1f7;
+  width: 8%;
+  height: 8%;
+  margin-top: 1%;
 }
