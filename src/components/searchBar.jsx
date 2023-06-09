@@ -35,7 +35,7 @@ const SearchCoinsBar = () => {
       <div key={element.id}>
         <div>
           <div className="criptoInfo">
-            <img src={element.image} className="symbol" alt={element.name} />
+            <img src={element.thumb} className="symbol" alt={element.name} />
             <p>{element.name}</p>
             <p>${element.current_price}</p>
           </div>
