@@ -1,29 +1,53 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import searchInfo from "../helper/getCriptoCoinData";
+import search from "../helper/search";
 
 const SearchCoinsBar =  () =>{
-
+    
     const[data, setData] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
+    const[searchData, setSearchData] = useState([]);
+    
+    // const FilterCoin = (event) => {
+    //     setSearchTerm(event.target.value);
+    // };
+    
+    // const filteredData = data.filter((element) =>
+    // element.symbol.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    // element.name.toLowerCase().includes(searchTerm.toLowerCase())
+    // );
+    
+    // const end= `https://api.coingecko.com/api/v3/search?query=${filteredData}`
 
-    const fetchData = async () => {
-        const newData = await searchInfo();
-        setData(newData)
-    }
 
-    fetchData()
+    // const searchResult = async () => {
+    //     const searchData = await search(end); 
+    //     setSearchData(searchData);      
+    // };
+       
 
-    const FilterCoin = (event) => {
-        setSearchTerm(event.target.value);
-      };
+    useEffect(()=>{
+        const fetchData = async () => {
+            const newData = await searchInfo();
+            setData(newData)
+        }
+        fetchData()
+    })
 
-    const filteredData = data.filter((element) =>
-        element.symbol.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        element.name.toLowerCase().includes(searchTerm.toLowerCase())
-      );
+    // useEffect(()=>{
+    //     const searchFetch = async(url) =>{
+    //         const dataResultApi = await searchResult(url);
+    //         setSearchData(dataResultApi);
+    //     }
+    //     searchFetch(end)
+    // })
+      
+    // useEffect(() => {
+    //     searchResult(); 
+    //   }, [filteredData]);
       
 
-    const dataInfo = filteredData.map((element) => {
+    const dataInfo = data.map((element) => {
         return(
             <div>
                 <div >
@@ -46,7 +70,7 @@ const SearchCoinsBar =  () =>{
                 <div className="endPart">
                     <div className="tittleSearch">
                         <h1>Control Panel</h1>
-                        <input className="searchBar" type="text" onChange={FilterCoin} placeholder="Enter your search request..." />
+                        <input className="searchBar" type="text" /*onChange={FilterCoin}*/ placeholder="Enter your search request..." />
                     </div>
                     <div className="b2b">
                         <h3>B2B DISTRIBUTION</h3>
@@ -63,4 +87,3 @@ const SearchCoinsBar =  () =>{
 }
 
 export default SearchCoinsBar;
-
