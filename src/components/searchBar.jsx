@@ -1,24 +1,32 @@
 import React, { useState, useEffect } from "react";
+import Error from "./error";
 
 const SearchCoinsBar = () => {
   const [data, setData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
+      setIsLoading(true);
+      setError(null);
+
       try {
         const response = await fetch(
-          `https://api.coingecko.com/api/v3/search?query=${searchTerm}`
+          `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1`
         );
         const newData = await response.json();
-        setData(newData.coins);
+        setData(newData);
       } catch (error) {
-        console.log(error);
+        setError(error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
     fetchData();
-  }, [searchTerm]);
+  }, []);
 
   const FilterCoin = (event) => {
     setSearchTerm(event.target.value);
@@ -35,9 +43,9 @@ const SearchCoinsBar = () => {
       <div key={element.id}>
         <div>
           <div className="criptoInfo">
-            <img src={element.thumb} className="symbol" alt={element.name} />
+            <img src={element.image} className="symbol" alt={element.name} />
             <p>{element.name}</p>
-            <p>${element.current_price}</p>
+            <p>${element.current_price.toFixed(2).replace('.',',')} USD</p>
           </div>
         </div>
       </div>
@@ -65,7 +73,13 @@ const SearchCoinsBar = () => {
             <p>Sales Deal</p>
           </div>
           <hr className="line" />
-          <div>{dataInfo}</div>
+          {isLoading ? (
+            <div className="loading">Loading...</div>
+          ) : error ? (
+            <Error />
+          ) : (
+            <div>{dataInfo}</div>
+          )}
         </div>
       </div>
     </section>
